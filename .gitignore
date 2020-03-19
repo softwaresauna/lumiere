@@ -1,2 +1,4 @@
 .idea
 story-tags.txt
+node_modules
+**/dist
