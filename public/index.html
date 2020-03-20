@@ -6,6 +6,11 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
 </head>
 <body>
+
+<label for="dataFileUrl">Data file:</label>
+<input id="dataFileUrl" type="text" placeholder="URL">
+<button onclick="window.location.search = '?sourceUrl=' + document.getElementById('dataFileUrl').value">Load</button>
+
 <div class="ct-chart ct-perfect-fourth"></div>
 
 <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
