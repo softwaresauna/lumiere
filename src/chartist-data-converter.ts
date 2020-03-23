@@ -1,8 +1,8 @@
 import {Data} from "./data";
 
-interface ChartistData {
+export interface ChartistData {
     labels: string[];
-    series: UnnamedSeries | NamedSeries;
+    series: UnnamedSeries[] | NamedSeries[];
 }
 
 type UnnamedSeries = number[];
@@ -16,6 +16,6 @@ export function toChartistData(data: Data): ChartistData {
 
     return {
         labels: data.labels,
-        series: data.values
+        series: [data.values]
     }
 }
