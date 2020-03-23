@@ -4,7 +4,7 @@ import {ChartistData, toChartistData} from "./chartist-data-converter";
 it("convert domain model to Chartist model", () => {
 
     const data: Data = {
-      labels: ["foo", "bar"],
+        labels: ["foo", "bar"],
         values: [4, -17]
     };
 
