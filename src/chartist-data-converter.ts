@@ -1,4 +1,4 @@
-import {Data} from "./data";
+import {StoryCompletionData} from "./story-completion";
 
 export interface ChartistData {
     labels: string[];
@@ -12,10 +12,10 @@ interface NamedSeries {
     value: number[];
 }
 
-export function toChartistData(data: Data): ChartistData {
+export function toChartistData(data: StoryCompletionData): ChartistData {
 
     return {
-        labels: data.labels,
-        series: [data.values]
+        labels: data.timeLabels,
+        series: [data.completedStoryCounts]
     }
 }

@@ -1,4 +1,4 @@
-import {getData} from "./data";
+import {getStoryCompletionData} from "./story-completion";
 import axios from "axios";
 import {toChartistData} from "./chartist-data-converter";
 
@@ -16,7 +16,7 @@ function loadData(sourceUrl) {
         .then(response => {
             const storyTagsText = response.data;
 
-            const chartData = getData(storyTagsText);
+            const chartData = getStoryCompletionData(storyTagsText);
             const chartistData = toChartistData(chartData);
 
             // Create a new line chart object where as first parameter we pass in a selector

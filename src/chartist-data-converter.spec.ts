@@ -1,11 +1,11 @@
-import {Data} from "./data";
+import {StoryCompletionData} from "./story-completion";
 import {ChartistData, toChartistData} from "./chartist-data-converter";
 
 it("convert domain model to Chartist model", () => {
 
-    const data: Data = {
-        labels: ["foo", "bar"],
-        values: [4, -17]
+    const data: StoryCompletionData = {
+        timeLabels: ["foo", "bar"],
+        completedStoryCounts: [4, -17]
     };
 
     const expectedChartistData: ChartistData = {
