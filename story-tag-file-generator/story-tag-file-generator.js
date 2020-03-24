@@ -111,8 +111,3 @@ function entry() {
 const fs = require('fs');
 
 fs.writeFileSync("story-tag-file-generator/story-tags-test-data.txt", entries.join("\n"));
-
-
-
-
-
