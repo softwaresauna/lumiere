@@ -2,9 +2,6 @@ import {getStoryCompletionData} from "./story-completion";
 import axios from "axios";
 import {toChartistData} from "./chartist-data-converter";
 
-// "https://raw.githubusercontent.com/softwaresauna/story-tag-results-test/master/story-tags.txt"
-
-
 function loadData(sourceUrl) {
 
     if (!sourceUrl){
