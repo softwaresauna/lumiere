@@ -9,8 +9,8 @@ function randomInterval(min, max) {
 const startMillis = 1584090441321;
 const hours = 1000 * 60 * 60;
 
-const timePassedMin = 4 * hours;
-const timePassedMax = 48 * hours;
+const timePassedMin = 1 * hours;
+const timePassedMax = 6 * hours;
 
 let lastEntryTime = startMillis;
 
@@ -110,7 +110,7 @@ function entry() {
 
 const fs = require('fs');
 
-fs.writeFileSync("story-tags.txt", entries.join("\n"));
+fs.writeFileSync("story-tag-file-generator/story-tags-test-data.txt", entries.join("\n"));
 
 
 
