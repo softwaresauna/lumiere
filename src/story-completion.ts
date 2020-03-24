@@ -5,8 +5,23 @@ export interface StoryCompletionData {
 
 export function getStoryCompletionData(storyTagsText: string): StoryCompletionData {
 
+    const entries = storyTagsText
+        .split("\n")
+        .map(entry => ({
+            timeLabel: extractTimeLabel(entry),
+            value: extractStoryCount(entry)
+        }));
+
     return {
-        timeLabels: [storyTagsText.substring(0, storyTagsText.indexOf("T"))],
-        completedStoryCounts: [+storyTagsText.split(" ")[1]]
+        timeLabels: entries.map(entry => entry.timeLabel),
+        completedStoryCounts: entries.map(entry => entry.value)
     };
+}
+
+function extractTimeLabel(entry: string): string {
+    return entry.substring(0, entry.indexOf("T"));
+}
+
+function extractStoryCount(entry: string): number {
+    return +entry.split(" ")[1];
 }
