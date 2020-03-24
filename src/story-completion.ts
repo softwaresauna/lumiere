@@ -3,18 +3,29 @@ export interface StoryCompletionData {
     completedStoryCounts: number[];
 }
 
+interface Entry {
+    timeLabel: string;
+    value: number;
+}
+
 export function getStoryCompletionData(storyTagsText: string): StoryCompletionData {
 
-    const entries = storyTagsText
+    const entriesByTimeLabel = storyTagsText
         .split("\n")
         .map(entry => ({
             timeLabel: extractTimeLabel(entry),
             value: extractStoryCount(entry)
-        }));
+        }))
+        .reduce(
+            (map: Map<string, number>, entry: Entry) => {
+                map.set(entry.timeLabel, entry.value);
+                return map;
+            },
+            new Map<string, number>());
 
     return {
-        timeLabels: entries.map(entry => entry.timeLabel),
-        completedStoryCounts: entries.map(entry => entry.value)
+        timeLabels: Array.from(entriesByTimeLabel.keys()),
+        completedStoryCounts: Array.from(entriesByTimeLabel.values())
     };
 }
 
