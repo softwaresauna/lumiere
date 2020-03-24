@@ -6,7 +6,7 @@ export interface StoryCompletionData {
 export function getStoryCompletionData(storyTagsText: string): StoryCompletionData {
 
     return {
-        timeLabels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
-        completedStoryCounts: [5, 2, 4, 2, 0]
+        timeLabels: [storyTagsText.substring(0, storyTagsText.indexOf("T"))],
+        completedStoryCounts: [+storyTagsText.split(" ")[1]]
     };
 }
