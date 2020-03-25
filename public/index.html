@@ -9,7 +9,18 @@
 
 <label for="dataFileUrl">Data file:</label>
 <input id="dataFileUrl" type="text" placeholder="URL">
-<button onclick="window.location.search = '?sourceUrl=' + document.getElementById('dataFileUrl').value">Load</button>
+
+<label for="endDate">End date:</label>
+<input id="endDate" type="text" placeholder="YYYY-MM-DD">
+
+<button onclick="
+    window.location.search =
+        '?sourceUrl=' + document.getElementById('dataFileUrl').value
+        +
+        '&endDate=' + document.getElementById('endDate').value
+">
+    Load
+</button>
 
 <div class="ct-chart ct-perfect-fourth"></div>
 

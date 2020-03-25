@@ -2,7 +2,7 @@ import {getDoneStoriesHistory} from "./done-stories-history";
 import axios from "axios";
 import {toChartistData} from "./chartist-data-converter";
 
-function loadData(sourceUrl) {
+function loadData(sourceUrl, endDate) {
 
     if (!sourceUrl) {
         console.log("Loading data aborted: No URL in query param 'sourceUrl'.");
@@ -13,42 +13,33 @@ function loadData(sourceUrl) {
         .then(response => {
             const storyTagsText = response.data;
 
-            const history = getDoneStoriesHistory(storyTagsText);
+            const endMillis = endDate
+                ? new Date(endDate).getTime()
+                : undefined;
 
+            const history = getDoneStoriesHistory(storyTagsText, endMillis);
 
-            const chartistData =
-                //toChartistData(history);
-                {
-                    labels: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"],
-                    series: [[1, 2, 3, 1, 2, 3]]
-                };
+            const chartistData = toChartistData(history);
 
-
-            const xAxisSize = history.storyCounts.length + 10;
-
-
-           new Chartist.Bar(
+            new Chartist.Bar(
                 '.ct-chart',
                 chartistData,
                 {
-                    // axisX: {
-                    //     type: Chartist.FixedScaleAxis,
-                    //     high: xAxisSize,
-                    //     low: 0,
-                    //     divisor: xAxisSize,
-                    // },
-
                     axisY: {
                         type: Chartist.FixedScaleAxis,
                         onlyInteger: true,
-                        high: 6,
+                        high: 200,
                         low: 0,
-                        divisor: 6,
+                        divisor: 5,
                     }
                 });
         });
 }
 
 const sourceUrl = new URLSearchParams(window.location.search).get("sourceUrl");
+const endDate = new URLSearchParams(window.location.search).get("endDate");
 
-loadData(sourceUrl);
+document.getElementById("dataFileUrl").setAttribute("value", sourceUrl);
+document.getElementById("endDate").setAttribute("value", endDate);
+
+loadData(sourceUrl, endDate);
