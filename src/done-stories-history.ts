@@ -13,12 +13,28 @@ export const INCREMENT_MILLIS = 24 * HOUR_MILLIS;
 
 export function getDoneStoriesHistory(storyTagsText: string, endMillis: number): DoneStoriesHistory {
 
-    const entries: Entry[] = storyTagsText
+    const entries: Entry[] = extractEntries(storyTagsText);
+
+    const startingAtMillis = entries[0].timestampMillis;
+
+    const storyCounts = computeStoryCounts(entries, startingAtMillis);
+
+    return {
+        timeLabels: generateTimeLabels(startingAtMillis, storyCounts.length),
+        storyCounts
+    };
+}
+
+function extractEntries(text: string): Entry[] {
+    return text
         .split("\n")
         .map(entry => ({
             timestampMillis: extractTimestamp(entry),
             value: extractStoryCount(entry)
         }));
+}
+
+function computeStoryCounts(entries: Entry[], startMillis: number): number[] {
 
     const entriesByTime = entries
         .reduce(
@@ -30,9 +46,7 @@ export function getDoneStoriesHistory(storyTagsText: string, endMillis: number):
 
     const storyCounts: number[] = [];
 
-    const startingAtMillis = entries[0].timestampMillis;
-
-    let currentDayMillis = startingAtMillis;
+    let currentDayMillis = startMillis;
     let lastStoryCount = 0;
 
     while (entriesByTime.size > 0) {
@@ -42,10 +56,7 @@ export function getDoneStoriesHistory(storyTagsText: string, endMillis: number):
         currentDayMillis += INCREMENT_MILLIS;
     }
 
-    return {
-        timeLabels: generateTimeLabels(startingAtMillis, storyCounts.length),
-        storyCounts
-    };
+    return storyCounts;
 }
 
 function extractTimestamp(entry: string): number {
