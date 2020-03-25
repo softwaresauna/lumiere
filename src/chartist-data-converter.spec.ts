@@ -1,17 +1,17 @@
-import {StoryCompletionData} from "./story-completion";
+import {DoneStoriesHistory} from "./done-stories-history";
 import {ChartistData, toChartistData} from "./chartist-data-converter";
 
 it("convert domain model to Chartist model", () => {
 
-    const data: StoryCompletionData = {
-        timeLabels: ["foo", "bar"],
-        completedStoryCounts: [4, -17]
+    const history: DoneStoriesHistory = {
+        timeLabels: ["foo", "bar", "pop"],
+        storyCounts: [4, -17]
     };
 
     const expectedChartistData: ChartistData = {
-        labels: ["foo", "bar"],
+        labels: ["foo", "bar", "pop"],
         series: [[4, -17]]
     };
 
-    expect(toChartistData(data)).toEqual(expectedChartistData);
+    expect(toChartistData(history)).toEqual(expectedChartistData);
 });

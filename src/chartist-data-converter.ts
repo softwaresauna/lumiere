@@ -1,8 +1,8 @@
-import {StoryCompletionData} from "./story-completion";
+import {DoneStoriesHistory} from "./done-stories-history";
 
 export interface ChartistData {
     labels: string[];
-    series: UnnamedSeries[] | NamedSeries[];
+    series: (UnnamedSeries | NamedSeries)[];
 }
 
 type UnnamedSeries = number[];
@@ -12,10 +12,10 @@ interface NamedSeries {
     value: number[];
 }
 
-export function toChartistData(data: StoryCompletionData): ChartistData {
+export function toChartistData(data: DoneStoriesHistory): ChartistData {
 
     return {
         labels: data.timeLabels,
-        series: [data.completedStoryCounts]
+        series: [data.storyCounts]
     }
 }

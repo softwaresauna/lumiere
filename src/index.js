@@ -1,10 +1,10 @@
-import {getStoryCompletionData} from "./story-completion";
+import {getDoneStoriesHistory} from "./done-stories-history";
 import axios from "axios";
 import {toChartistData} from "./chartist-data-converter";
 
 function loadData(sourceUrl) {
 
-    if (!sourceUrl){
+    if (!sourceUrl) {
         console.log("Loading data aborted: No URL in query param 'sourceUrl'.");
         return;
     }
@@ -13,13 +13,39 @@ function loadData(sourceUrl) {
         .then(response => {
             const storyTagsText = response.data;
 
-            const chartData = getStoryCompletionData(storyTagsText);
-            const chartistData = toChartistData(chartData);
+            const history = getDoneStoriesHistory(storyTagsText);
 
-            // Create a new line chart object where as first parameter we pass in a selector
-            // that is resolving to our chart container element. The Second parameter
-            // is the actual data object.
-            new Chartist.Line('.ct-chart', chartistData);
+
+            const chartistData =
+                //toChartistData(history);
+                {
+                    labels: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"],
+                    series: [[1, 2, 3, 1, 2, 3]]
+                };
+
+
+            const xAxisSize = history.storyCounts.length + 10;
+
+
+           new Chartist.Bar(
+                '.ct-chart',
+                chartistData,
+                {
+                    // axisX: {
+                    //     type: Chartist.FixedScaleAxis,
+                    //     high: xAxisSize,
+                    //     low: 0,
+                    //     divisor: xAxisSize,
+                    // },
+
+                    axisY: {
+                        type: Chartist.FixedScaleAxis,
+                        onlyInteger: true,
+                        high: 6,
+                        low: 0,
+                        divisor: 6,
+                    }
+                });
         });
 }
 
