@@ -11,7 +11,7 @@ interface Entry {
 const HOUR_MILLIS = 1000 * 60 * 60;
 export const INCREMENT_MILLIS = 24 * HOUR_MILLIS;
 
-export function getDoneStoriesHistory(storyTagsText: string, endMillis: number): DoneStoriesHistory {
+export function getDoneStoriesHistory(storyTagsText: string, endMillis?: number): DoneStoriesHistory {
 
     const entries: Entry[] = extractEntries(storyTagsText);
 
@@ -20,7 +20,7 @@ export function getDoneStoriesHistory(storyTagsText: string, endMillis: number):
     const storyCounts = computeStoryCounts(entries, startingAtMillis);
 
     return {
-        timeLabels: generateTimeLabels(startingAtMillis, endMillis),
+        timeLabels: generateTimeLabels(startingAtMillis, endMillis, storyCounts.length),
         storyCounts
     };
 }
@@ -67,9 +67,11 @@ function extractStoryCount(entry: string): number {
     return +entry.split(" ")[1];
 }
 
-function generateTimeLabels(startMillis: number, endMillis: number): string[] {
+function generateTimeLabels(startMillis: number, endMillis: number | undefined, dataSize: number): string[] {
 
-    const amountOfLabels = Math.floor((endMillis - startMillis) / INCREMENT_MILLIS) + 1;
+    const amountOfLabels = endMillis !== undefined
+        ? Math.floor((endMillis - startMillis) / INCREMENT_MILLIS) + 1
+        : dataSize;
 
     return Array(amountOfLabels).fill(0)
         .map((_, index) =>

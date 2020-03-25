@@ -104,7 +104,9 @@ describe("extracts time & value entries", () => {
     examples.forEach(example => it(JSON.stringify(example), () => {
 
         const storyTagsText = example.lines.join("\n");
-        const endMillis = new Date(getEndDateOrLastEntryDate(example)).getTime();
+        const endMillis = example.endDate
+            ? new Date(example.endDate).getTime()
+            : undefined;
 
         const expected: DoneStoriesHistory = {
             timeLabels: example.expectedTimeLabels,
@@ -113,8 +115,4 @@ describe("extracts time & value entries", () => {
 
         expect(getDoneStoriesHistory(storyTagsText, endMillis)).toEqual(expected)
     }));
-
-    function getEndDateOrLastEntryDate(example: Example): string {
-        return example.endDate || example.expectedTimeLabels[example.expectedTimeLabels.length - 1];
-    }
 });
