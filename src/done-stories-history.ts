@@ -20,7 +20,7 @@ export function getDoneStoriesHistory(storyTagsText: string, endMillis: number):
     const storyCounts = computeStoryCounts(entries, startingAtMillis);
 
     return {
-        timeLabels: generateTimeLabels(startingAtMillis, storyCounts.length),
+        timeLabels: generateTimeLabels(startingAtMillis, endMillis),
         storyCounts
     };
 }
@@ -67,10 +67,13 @@ function extractStoryCount(entry: string): number {
     return +entry.split(" ")[1];
 }
 
-function generateTimeLabels(startingAtMillis: number, amount: number): string[] {
-    return Array(amount).fill(0)
+function generateTimeLabels(startMillis: number, endMillis: number): string[] {
+
+    const amountOfLabels = Math.floor((endMillis - startMillis) / INCREMENT_MILLIS) + 1;
+
+    return Array(amountOfLabels).fill(0)
         .map((_, index) =>
-            formatTime(startingAtMillis + index * INCREMENT_MILLIS));
+            formatTime(startMillis + index * INCREMENT_MILLIS));
 }
 
 function formatTime(millis: number): string {
